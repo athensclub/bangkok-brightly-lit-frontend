@@ -27,6 +27,343 @@ import { CardDescription, CardTitle, CardHeader, CardContent, Card } from "@/com
 import { ResponsivePie } from "@nivo/pie"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import { AlertTitle, AlertDescription, Alert } from "@/components/ui/alert"
+import { ResponsiveHeatMap } from "@nivo/heatmap"
+import { ResponsiveLine } from "@nivo/line"
+
+function HeatmapChart(props) {
+  return (
+    (<div {...props}>
+      <ResponsiveHeatMap
+        data={[
+          {
+            id: "A",
+            data: [
+              {
+                x: "1",
+                y: 4415,
+              },
+              {
+                x: "2",
+                y: -59456,
+              },
+              {
+                x: "3",
+                y: -79886,
+              },
+              {
+                x: "4",
+                y: 14478,
+              },
+              {
+                x: "5",
+                y: -63874,
+              },
+              {
+                x: "6",
+                y: -47542,
+              },
+              {
+                x: "7",
+                y: 16635,
+              },
+              {
+                x: "8",
+                y: -30278,
+              },
+              {
+                x: "9",
+                y: -95178,
+              },
+            ],
+          },
+          {
+            id: "B",
+            data: [
+              {
+                x: "1",
+                y: 41241,
+              },
+              {
+                x: "2",
+                y: -77516,
+              },
+              {
+                x: "3",
+                y: -19422,
+              },
+              {
+                x: "4",
+                y: 61220,
+              },
+              {
+                x: "5",
+                y: -65044,
+              },
+              {
+                x: "6",
+                y: -59254,
+              },
+              {
+                x: "7",
+                y: 9299,
+              },
+              {
+                x: "8",
+                y: -58470,
+              },
+              {
+                x: "9",
+                y: 51828,
+              },
+            ],
+          },
+          {
+            id: "C",
+            data: [
+              {
+                x: "1",
+                y: 94426,
+              },
+              {
+                x: "2",
+                y: 31248,
+              },
+              {
+                x: "3",
+                y: -15766,
+              },
+              {
+                x: "4",
+                y: 22271,
+              },
+              {
+                x: "5",
+                y: 86246,
+              },
+              {
+                x: "6",
+                y: -23717,
+              },
+              {
+                x: "7",
+                y: 97595,
+              },
+              {
+                x: "8",
+                y: -69800,
+              },
+              {
+                x: "9",
+                y: 74453,
+              },
+            ],
+          },
+          {
+            id: "D",
+            data: [
+              {
+                x: "1",
+                y: -49899,
+              },
+              {
+                x: "2",
+                y: 13864,
+              },
+              {
+                x: "3",
+                y: -45673,
+              },
+              {
+                x: "4",
+                y: -20270,
+              },
+              {
+                x: "5",
+                y: 99430,
+              },
+              {
+                x: "6",
+                y: 17283,
+              },
+              {
+                x: "7",
+                y: -6514,
+              },
+              {
+                x: "8",
+                y: -21766,
+              },
+              {
+                x: "9",
+                y: -52610,
+              },
+            ],
+          },
+          {
+            id: "E",
+            data: [
+              {
+                x: "1",
+                y: 81123,
+              },
+              {
+                x: "2",
+                y: -25153,
+              },
+              {
+                x: "3",
+                y: 2577,
+              },
+              {
+                x: "4",
+                y: 24409,
+              },
+              {
+                x: "5",
+                y: 82923,
+              },
+              {
+                x: "6",
+                y: 51283,
+              },
+              {
+                x: "7",
+                y: 10208,
+              },
+              {
+                x: "8",
+                y: 4055,
+              },
+              {
+                x: "9",
+                y: -14699,
+              },
+            ],
+          },
+        ]}
+        margin={{ top: 0, right: 10, bottom: 30, left: 30 }}
+        axisTop={null}
+        axisBottom={{
+          tickSize: 0,
+          tickPadding: 16,
+        }}
+        axisLeft={{
+          tickSize: 0,
+          tickPadding: 16,
+        }}
+        colors={{
+          type: "sequential",
+          scheme: "blue_green",
+        }}
+        theme={{
+          tooltip: {
+            chip: {
+              borderRadius: "9999px",
+            },
+            container: {
+              fontSize: "12px",
+              textTransform: "capitalize",
+              borderRadius: "6px",
+            },
+          },
+        }}
+        role="application"
+        ariaLabel="A heatmap chart/matrix" />
+    </div>)
+  );
+}
+
+function MapPinIcon(props) {
+  return (
+    (<svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round">
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>)
+  );
+}
+
+function LineChart(props) {
+  return (
+    (<div {...props}>
+      <ResponsiveLine
+        data={[
+          // {
+          //   id: "Desktop",
+          //   data: [
+          //     { x: "Jan", y: 43 },
+          //     { x: "Feb", y: 137 },
+          //     { x: "Mar", y: 61 },
+          //     { x: "Apr", y: 145 },
+          //     { x: "May", y: 26 },
+          //     { x: "Jun", y: 154 },
+          //   ],
+          // },
+          {
+            id: "Mobile",
+            data: [
+              { x: "Jan", y: 60 },
+              { x: "Feb", y: 48 },
+              { x: "Mar", y: 177 },
+              { x: "Apr", y: 78 },
+              { x: "May", y: 96 },
+              { x: "Jun", y: 204 },
+            ],
+          },
+        ]}
+        margin={{ top: 10, right: 10, bottom: 40, left: 40 }}
+        xScale={{
+          type: "point",
+        }}
+        yScale={{
+          type: "linear",
+        }}
+        axisTop={null}
+        axisRight={null}
+        axisBottom={{
+          tickSize: 0,
+          tickPadding: 16,
+        }}
+        axisLeft={{
+          tickSize: 0,
+          tickValues: 5,
+          tickPadding: 16,
+        }}
+        colors={["#177fcb"]}
+        pointSize={6}
+        useMesh={true}
+        gridYValues={6}
+        theme={{
+          tooltip: {
+            chip: {
+              borderRadius: "9999px",
+            },
+            container: {
+              fontSize: "12px",
+              textTransform: "capitalize",
+              borderRadius: "6px",
+            },
+          },
+          grid: {
+            line: {
+              stroke: "#f3f4f6",
+            },
+          },
+        }}
+        role="application" />
+    </div>)
+  );
+}
 
 export function Dashboard() {
   return (
@@ -142,38 +479,15 @@ export function Dashboard() {
             </div>
           </div>
           <div className="grid gap-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Card className="flex flex-col">
-                <CardHeader>
-                  <CardDescription>Normal Lighting Areas</CardDescription>
-                  <CardTitle>78%</CardTitle>
-                </CardHeader>
 
-              </Card>
-              <Card className="flex flex-col">
-                <CardHeader>
-                  <CardDescription>Low Lighting Areas</CardDescription>
-                  <CardTitle>15%</CardTitle>
-                </CardHeader>
-
-              </Card>
-              <Card className="flex flex-col">
-                <CardHeader>
-                  <CardDescription>Low Light with Motion</CardDescription>
-                  <CardTitle>7%</CardTitle>
-                </CardHeader>
-
-              </Card>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              
-              <Card className="flex flex-col">
-                <CardHeader>
+          <Card className="flex flex-col">
+            <CardHeader className="bg-gray-800">
+              <div className="flex flex-row justify-around">
+                <div className="flex flex-col">
                   <CardDescription>Location Details</CardDescription>
                   <CardTitle>Siam Square</CardTitle>
-                </CardHeader>
-                <CardContent className="grid gap-4">
-                  <div className="flex items-center gap-2">
+                </div>
+                <div className="flex items-center gap-2">
                     <LightbulbIcon className="h-5 w-5 text-yellow-500" />
                     <div>
                       <div className="font-semibold">Lighting Level</div>
@@ -194,9 +508,53 @@ export function Dashboard() {
                       <div className="text-sm text-gray-500 dark:text-gray-400">2 minutes ago</div>
                     </div>
                   </div>
+              </div>
+            </CardHeader>
+            
+          </Card>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <Card className="flex flex-col fit">
+                <CardHeader className="bg-slate-700">
+                  <CardDescription>Light Levels</CardDescription>
+                  <CardTitle>High</CardTitle>
+                  <LineChart className="aspect-[4/3]" />
+                </CardHeader>
+                {/* <CardContent>
+                  <HeatmapChart className="aspect-[4/3]" />
+                </CardContent> */}
+              </Card>
+              <Card className="flex flex-col">
+                <CardHeader className="bg-slate-700">
+                  <CardDescription>Movement Activity</CardDescription>
+                  <CardTitle>Moderate</CardTitle>
+                  <LineChart className="aspect-[4/3]" />
+                </CardHeader>
+                {/* <CardContent>
+                  <HeatmapChart className="aspect-[4/3]" />
+                </CardContent> */}
+              </Card>
+              <Card className="flex flex-col">
+                <CardHeader className = "bg-red-500">
+                  <CardDescription className="text-[#edf2f4]">Alerts</CardDescription>
+                  <CardTitle>2</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-4">
+                    <Alert>
+                      <AlertTitle>High Light Levels</AlertTitle>
+                      <AlertDescription>Elevated light levels detected in the Sukhumvit district.</AlertDescription>
+                    </Alert>
+                    <Alert>
+                      <AlertTitle>Increased Movement</AlertTitle>
+                      <AlertDescription>Unusual movement activity reported in the Chinatown area.</AlertDescription>
+                    </Alert>
+                  </div>
                 </CardContent>
               </Card>
-              
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+             
             </div>
           </div>
         </main>
@@ -376,53 +734,6 @@ function Package2Icon(props) {
     </svg>)
   );
 }
-
-
-function PieChart(props) {
-  return (
-    (<div {...props}>
-      <ResponsivePie
-        data={[
-          { id: "Jan", value: 111 },
-          { id: "Feb", value: 157 },
-          { id: "Mar", value: 129 },
-          { id: "Apr", value: 150 },
-          { id: "May", value: 119 },
-          { id: "Jun", value: 72 },
-        ]}
-        sortByValue
-        margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
-        cornerRadius={0}
-        padAngle={0}
-        borderWidth={1}
-        borderColor={"#ffffff"}
-        enableArcLinkLabels={false}
-        arcLabel={(d) => `${d.id}`}
-        arcLabelsTextColor={"#ffffff"}
-        arcLabelsRadiusOffset={0.65}
-        colors={["#2563eb"]}
-        theme={{
-          labels: {
-            text: {
-              fontSize: "18px",
-            },
-          },
-          tooltip: {
-            chip: {
-              borderRadius: "9999px",
-            },
-            container: {
-              fontSize: "12px",
-              textTransform: "capitalize",
-              borderRadius: "6px",
-            },
-          },
-        }}
-        role="application" />
-    </div>)
-  );
-}
-
 
 function SearchIcon(props) {
   return (

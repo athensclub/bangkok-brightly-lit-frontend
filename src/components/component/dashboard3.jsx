@@ -16,7 +16,7 @@ chivo({
 
 rubik({
   subsets: ['latin'],
-  display: 'swap',
+  display: 'swap',f
 })
 
 To read more about using these font, please visit the Next.js documentation:
