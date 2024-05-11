@@ -148,69 +148,25 @@ export function Dashboard() {
                   <CardDescription>Normal Lighting Areas</CardDescription>
                   <CardTitle>78%</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <PieChart className="aspect-square" />
-                </CardContent>
+
               </Card>
               <Card className="flex flex-col">
                 <CardHeader>
                   <CardDescription>Low Lighting Areas</CardDescription>
                   <CardTitle>15%</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <PieChart className="aspect-square" />
-                </CardContent>
+
               </Card>
               <Card className="flex flex-col">
                 <CardHeader>
                   <CardDescription>Low Light with Motion</CardDescription>
                   <CardTitle>7%</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <PieChart className="aspect-square" />
-                </CardContent>
+
               </Card>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Card className="flex flex-col">
-                <CardHeader>
-                  <CardDescription>Sensor Readings</CardDescription>
-                  <CardTitle>Real-Time Map</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="relative w-full h-[400px] rounded-lg overflow-hidden">
-                    <img
-                      alt="Map"
-                      className="object-cover w-full h-full"
-                      height={400}
-                      src="/placeholder.svg"
-                      style={{
-                        aspectRatio: "800/400",
-                        objectFit: "cover",
-                      }}
-                      width={800} />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="grid gap-4">
-                        <div
-                          className="flex items-center gap-2 bg-white/80 dark:bg-gray-950/80 px-4 py-2 rounded-lg">
-                          <LightbulbIcon className="h-5 w-5 text-yellow-500" />
-                          <span>Normal Lighting</span>
-                        </div>
-                        <div
-                          className="flex items-center gap-2 bg-white/80 dark:bg-gray-950/80 px-4 py-2 rounded-lg">
-                          <LightbulbIcon className="h-5 w-5 text-orange-500" />
-                          <span>Low Lighting</span>
-                        </div>
-                        <div
-                          className="flex items-center gap-2 bg-white/80 dark:bg-gray-950/80 px-4 py-2 rounded-lg">
-                          <LightbulbIcon className="h-5 w-5 text-red-500" />
-                          <span>Low Light with Motion</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              
               <Card className="flex flex-col">
                 <CardHeader>
                   <CardDescription>Location Details</CardDescription>
@@ -240,29 +196,7 @@ export function Dashboard() {
                   </div>
                 </CardContent>
               </Card>
-              <Card className="flex flex-col">
-                <CardHeader>
-                  <CardDescription>Filters</CardDescription>
-                  <CardTitle>Refine Data</CardTitle>
-                </CardHeader>
-                <CardContent className="grid gap-4">
-                  <div className="grid gap-2">
-                    <Label className="flex items-center gap-2 font-normal">
-                      <Checkbox id="filter-location" />
-                      Location{"\n"}
-                    </Label>
-                    <Label className="flex items-center gap-2 font-normal">
-                      <Checkbox id="filter-time" />
-                      Time{"\n"}
-                    </Label>
-                    <Label className="flex items-center gap-2 font-normal">
-                      <Checkbox id="filter-sensor" />
-                      Sensor Data{"\n"}
-                    </Label>
-                  </div>
-                  <Button variant="secondary">Apply Filters</Button>
-                </CardContent>
-              </Card>
+              
             </div>
           </div>
         </main>
