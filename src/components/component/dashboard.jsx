@@ -145,7 +145,7 @@ export function Dashboard() {
               Dashboard
             </h1>
             <div className="ml-auto flex items-center gap-2">
-              <Button className="hidden sm:flex" variant="outline">
+              <Button onClick={() => setSelectedDate(new Date())} className="hidden sm:flex" variant="outline">
                 Today
               </Button>
               <Popover>
