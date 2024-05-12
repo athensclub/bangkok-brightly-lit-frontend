@@ -34,7 +34,8 @@ import {
 } from "@/components/ui/card";
 import { AlertTitle, AlertDescription, Alert } from "@/components/ui/alert";
 import { ResponsiveLine } from "@nivo/line";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getAlert, getCurrentStatus, getSpecifyStatus } from "@/lib/api";
 
 function MapPinIcon(props) {
   return (
@@ -135,6 +136,10 @@ function LineChart(props) {
 export function Dashboard() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+  useEffect(() => {
+    getSpecifyStatus(new Date()).then(console.log);
+  });
+
   return (
     <div className="grid min-h-screen w-full">
       <div className="flex flex-col">
@@ -145,7 +150,11 @@ export function Dashboard() {
               Dashboard
             </h1>
             <div className="ml-auto flex items-center gap-2">
-              <Button onClick={() => setSelectedDate(new Date())} className="hidden sm:flex" variant="outline">
+              <Button
+                onClick={() => setSelectedDate(new Date())}
+                className="hidden sm:flex"
+                variant="outline"
+              >
                 Today
               </Button>
               <Popover>
@@ -160,7 +169,11 @@ export function Dashboard() {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent align="end" className="w-auto p-0">
-                  <Calendar mode="single" setSelected={setSelectedDate} selected={selectedDate}/>
+                  <Calendar
+                    mode="single"
+                    setSelected={setSelectedDate}
+                    selected={selectedDate}
+                  />
                 </PopoverContent>
               </Popover>
             </div>
@@ -261,8 +274,12 @@ export function Dashboard() {
 }
 
 function formatDate(date) {
-
-  const formattedDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const formattedDate = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
 
   return date.toLocaleDateString("en-US", formattedDate);
 }
