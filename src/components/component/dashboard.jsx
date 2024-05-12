@@ -57,32 +57,35 @@ function MapPinIcon(props) {
   );
 }
 
+function Loading(props) {   
+  return (     
+    <div className={"flex " + (props.centered ? "absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]" : "")}>       
+      <div className="flex items-center space-x-2 animate-pulse">         
+        <div className="w-3 h-3 bg-gray-500 rounded-full dark:bg-gray-400" />         
+         <div className="w-3 h-3 bg-gray-500 rounded-full dark:bg-gray-400" />         
+      <div className="w-3 h-3 bg-gray-500 rounded-full dark:bg-gray-400" />       
+    </div>     
+  </div>   
+  )
+} 
+
 function LineChart(props) {
+  const [status, setStatus] = useState([]);
+  const [alert, setAlert] = useState();
+
+  useEffect(() => {
+    getSpecifyStatus(new Date()).then((prop) => {
+      setStatus(prop);
+    });
+  }, []);
+
   return (
     <div {...props}>
-      <ResponsiveLine
+      {status.length===0?<Loading centered></Loading>:<ResponsiveLine
         data={[
-          // {
-          //   id: "Desktop",
-          //   data: [
-          //     { x: "Jan", y: 43 },
-          //     { x: "Feb", y: 137 },
-          //     { x: "Mar", y: 61 },
-          //     { x: "Apr", y: 145 },
-          //     { x: "May", y: 26 },
-          //     { x: "Jun", y: 154 },
-          //   ],
-          // },
           {
             id: "Mobile",
-            data: [
-              { x: "Jan", y: 60 },
-              { x: "Feb", y: 48 },
-              { x: "Mar", y: 177 },
-              { x: "Apr", y: 78 },
-              { x: "May", y: 96 },
-              { x: "Jun", y: 204 },
-            ],
+            data: status.map(item => ({ x: `${new Date(item.timestamp).getHours().toString().padStart(2,"0")}:${new Date(item.timestamp).getMinutes().toString().padStart(2,"0")}`, y: item[props.keyname] })),
           },
         ]}
         margin={{ top: 10, right: 10, bottom: 40, left: 40 }}
@@ -128,17 +131,32 @@ function LineChart(props) {
           },
         }}
         role="application"
-      />
+      />}
+      
     </div>
   );
 }
 
 export function Dashboard() {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [current, setCurrent] = useState(null);
+  const [alert, setAlert] = useState(null);
+  
 
   useEffect(() => {
-    getSpecifyStatus(new Date()).then(console.log);
-  });
+    setInterval(() => {
+      getCurrentStatus()
+        .then((prop) => {
+          setCurrent(prop);
+          console.log(prop);
+        })
+      getAlert()
+        .then((prop) => {
+          setAlert(prop);
+          // console.log(prop);
+        })
+    }, 5000)
+  }, [])
 
   return (
     <div className="grid min-h-screen w-full">
@@ -188,29 +206,35 @@ export function Dashboard() {
                   </div>
                   <div className="flex items-center gap-2">
                     <LightbulbIcon className="h-5 w-5 text-yellow-500" />
-                    <div>
+                    <div className="relative">
                       <div className="font-semibold">Lighting Level</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Normal
-                      </div>
+                      {current===null? <Loading></Loading>:
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          {current.light}
+                        </div>
+                      }
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <MoveIcon className="h-5 w-5 text-green-500" />
-                    <div>
+                    <div className="relative">
                       <div className="font-semibold">Motion Activity</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        Moderate
-                      </div>
+                      {current===null? <Loading></Loading>:
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          {current.pir}
+                        </div> 
+                      }
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <ClockIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                     <div>
                       <div className="font-semibold">Last Updated</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
-                        2 minutes ago
-                      </div>
+                      {current===null?<Loading></Loading>:
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          5 seconds ago
+                        </div>
+                      }
                     </div>
                   </div>
                 </div>
@@ -218,50 +242,61 @@ export function Dashboard() {
             </Card>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Card className="flex flex-col fit">
+              <Card className="flex flex-col fit relative">
                 <CardHeader className="bg-slate-700">
                   <CardDescription>Light Levels</CardDescription>
                   <CardTitle>High</CardTitle>
-                  <LineChart className="aspect-[4/3]" />
+                  <LineChart className="aspect-[4/3]" keyname="light" />
                 </CardHeader>
-                {/* <CardContent>
-                  <HeatmapChart className="aspect-[4/3]" />
-                </CardContent> */}
               </Card>
-              <Card className="flex flex-col">
+              <Card className="flex flex-col relative">
                 <CardHeader className="bg-slate-700">
                   <CardDescription>Movement Activity</CardDescription>
                   <CardTitle>Moderate</CardTitle>
-                  <LineChart className="aspect-[4/3]" />
+                  <LineChart className="aspect-[4/3]" keyname = "pir" />
                 </CardHeader>
-                {/* <CardContent>
-                  <HeatmapChart className="aspect-[4/3]" />
-                </CardContent> */}
               </Card>
               <Card className="flex flex-col">
                 <CardHeader className="bg-red-500">
                   <CardDescription className="text-[#edf2f4]">
                     Alerts
                   </CardDescription>
-                  <CardTitle>2</CardTitle>
+                  {alert!==null?
+                    (alert.alertLight?
+                      alert.alertPir?
+                      <CardTitle>2</CardTitle>:
+                      <CardTitle>1</CardTitle>
+                      :alert.alertPir?
+                      <CardTitle>1</CardTitle>:
+                      <CardTitle>0</CardTitle>):
+                      <Loading></Loading>
+                  }
+                  
                 </CardHeader>
                 <CardContent className="bg-slate-700">
+                {alert===null? <Loading></Loading>:
                   <div className="grid gap-4 bg-slate-700">
+                  {alert.alertLight?
                     <Alert className="mt-10">
                       <AlertTitle>High Light Levels</AlertTitle>
                       <AlertDescription>
                         Elevated light levels detected in the Sukhumvit
                         district.
                       </AlertDescription>
-                    </Alert>
-                    <Alert className="mb-14">
+                    </Alert>:
+                    <div></div>
+                  }
+                  {alert.alertPir?
+                    <Alert className="mt-10">
                       <AlertTitle>Increased Movement</AlertTitle>
                       <AlertDescription>
                         Unusual movement activity reported in the Chinatown
                         area.
                       </AlertDescription>
-                    </Alert>
-                  </div>
+                    </Alert>: <div></div>
+                  }
+                </div>
+                }
                 </CardContent>
               </Card>
             </div>
