@@ -143,6 +143,7 @@ export function Dashboard() {
   const [current, setCurrent] = useState(null);
   const [alert, setAlert] = useState(null);
   
+  useEffect(() => console.log(selectedDate), [selectedDate])
 
   useEffect(() => {
     setInterval(() => {
@@ -243,15 +244,15 @@ export function Dashboard() {
             </Card>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <Card className="flex flex-col fit relative">
-                <CardHeader className="bg-slate-700">
-                  <CardDescription>Light Levels</CardDescription>
+              <Card className="flex flex-col relative">
+                <CardHeader className="bg-slate-700 h-full">
+                  <CardTitle>Light Levels</CardTitle>
                   <LineChart className="aspect-[4/3]" keyname="light" selectedDate={selectedDate}/>
                 </CardHeader>
               </Card>
               <Card className="flex flex-col relative">
-                <CardHeader className="bg-slate-700">
-                  <CardDescription>Movement Activity</CardDescription>
+                <CardHeader className="bg-slate-700 ">
+                  <CardTitle>Movement Activity</CardTitle>
                   <LineChart className="aspect-[4/3]" keyname = "pir" selectedDate={selectedDate}/>
                 </CardHeader>
               </Card>
