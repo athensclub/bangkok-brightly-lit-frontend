@@ -232,16 +232,16 @@ export function Dashboard() {
                   </CardDescription>
                   <CardTitle>2</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4">
-                    <Alert>
+                <CardContent className="bg-slate-700">
+                  <div className="grid gap-4 bg-slate-700">
+                    <Alert className="mt-10">
                       <AlertTitle>High Light Levels</AlertTitle>
                       <AlertDescription>
                         Elevated light levels detected in the Sukhumvit
                         district.
                       </AlertDescription>
                     </Alert>
-                    <Alert>
+                    <Alert className="mb-14">
                       <AlertTitle>Increased Movement</AlertTitle>
                       <AlertDescription>
                         Unusual movement activity reported in the Chinatown
@@ -261,17 +261,6 @@ export function Dashboard() {
 }
 
 function formatDate(date) {
-  const year = date.getFullYear();
-  const month = date.getMonth(); // Months are zero-indexed (January is 0)
-  const day = date.getDate();
-  const weekDay = date.getDay();
-
-  const dateSuffix =
-    day % 10 === 1 && day !== 11
-      ? "st"
-      : day % 10 === 2 && day !== 12
-      ? "nd"
-      : "th"
 
   const formattedDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
