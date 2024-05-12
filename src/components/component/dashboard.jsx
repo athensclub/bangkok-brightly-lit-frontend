@@ -89,7 +89,7 @@ function LineChart(props) {
             data: status.map(item => ({ x: `${new Date(item.timestamp).getHours().toString().padStart(2,"0")}:${new Date(item.timestamp).getMinutes().toString().padStart(2,"0")}`, y: item[props.keyname] })),
           },
         ]}
-        lineWidth={8}
+        // lineWidth={8}
         margin={{ top: 10, right: 10, bottom: 40, left: 40 }}
         xScale={{
           type: "point",
