@@ -264,19 +264,18 @@ function formatDate(date) {
   const year = date.getFullYear();
   const month = date.getMonth(); // Months are zero-indexed (January is 0)
   const day = date.getDate();
+  const weekDay = date.getDay();
 
   const dateSuffix =
     day % 10 === 1 && day !== 11
       ? "st"
       : day % 10 === 2 && day !== 12
       ? "nd"
-      : "th";
+      : "th"
 
-  const formattedDate = `${new Intl.DateTimeFormat("en-US", {
-    month: "long",
-  }).format(date)} ${day}${dateSuffix}, ${year}`;
+  const formattedDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-  return formattedDate;
+  return date.toLocaleDateString("en-US", formattedDate);
 }
 
 function BellIcon(props) {
