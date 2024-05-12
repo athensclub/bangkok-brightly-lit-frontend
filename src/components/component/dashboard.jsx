@@ -74,10 +74,11 @@ function LineChart(props) {
   const [alert, setAlert] = useState();
 
   useEffect(() => {
-    getSpecifyStatus(new Date()).then((prop) => {
+    setStatus([]);
+    getSpecifyStatus(props.selectedDate).then((prop) => {
       setStatus(prop);
     });
-  }, []);
+  }, [props.selectedDate]);
 
   return (
     <div {...props}>
@@ -245,19 +246,18 @@ export function Dashboard() {
               <Card className="flex flex-col fit relative">
                 <CardHeader className="bg-slate-700">
                   <CardDescription>Light Levels</CardDescription>
-                  <CardTitle>High</CardTitle>
-                  <LineChart className="aspect-[4/3]" keyname="light" />
+                  <LineChart className="aspect-[4/3]" keyname="light" selectedDate={selectedDate}/>
                 </CardHeader>
               </Card>
               <Card className="flex flex-col relative">
                 <CardHeader className="bg-slate-700">
                   <CardDescription>Movement Activity</CardDescription>
-                  <CardTitle>Moderate</CardTitle>
-                  <LineChart className="aspect-[4/3]" keyname = "pir" />
+                  <LineChart className="aspect-[4/3]" keyname = "pir" selectedDate={selectedDate}/>
                 </CardHeader>
               </Card>
-              <Card className="flex flex-col">
-                <CardHeader className="bg-red-500">
+
+              <Card className="flex flex-col h-full">
+                <CardHeader className="bg-red-500 h-[23%]">
                   <CardDescription className="text-[#edf2f4]">
                     Alerts
                   </CardDescription>
@@ -269,33 +269,39 @@ export function Dashboard() {
                       :alert.alertPir?
                       <CardTitle>1</CardTitle>:
                       <CardTitle>0</CardTitle>):
-                      <Loading></Loading>
+                      <Loading ></Loading>
                   }
                   
                 </CardHeader>
-                <CardContent className="bg-slate-700">
-                {alert===null? <Loading></Loading>:
-                  <div className="grid gap-4 bg-slate-700">
-                  {alert.alertLight?
-                    <Alert className="mt-10">
-                      <AlertTitle>High Light Levels</AlertTitle>
-                      <AlertDescription>
-                        Elevated light levels detected in the Sukhumvit
-                        district.
-                      </AlertDescription>
-                    </Alert>:
-                    <div></div>
-                  }
-                  {alert.alertPir?
-                    <Alert className="mt-10">
-                      <AlertTitle>Increased Movement</AlertTitle>
-                      <AlertDescription>
-                        Unusual movement activity reported in the Chinatown
-                        area.
-                      </AlertDescription>
-                    </Alert>: <div></div>
-                  }
-                </div>
+                <CardContent className="bg-slate-700 h-[77%] relative">
+                {alert===null? <Loading centered></Loading>:
+                  (alert.alertLight === false && alert.alertPir === false)?
+                    <div className="grid gap-4 bg-slate-700">
+                      <Alert className="mt-10">
+                        <AlertTitle>Nothing to report.</AlertTitle>
+                      </Alert>:
+                    </div>:
+                    <div className="grid gap-4 bg-slate-700">
+                    {alert.alertLight?
+                      <Alert className="mt-10">
+                        <AlertTitle>High Light Levels</AlertTitle>
+                        <AlertDescription>
+                          Elevated light levels detected in the Sukhumvit
+                          district.
+                        </AlertDescription>
+                      </Alert>:
+                      <div></div>
+                    }
+                    {alert.alertPir?
+                      <Alert className="mt-10">
+                        <AlertTitle>Increased Movement</AlertTitle>
+                        <AlertDescription>
+                          Unusual movement activity reported in the Chinatown
+                          area.
+                        </AlertDescription>
+                      </Alert>: <div></div>
+                    }
+                  </div>
                 }
                 </CardContent>
               </Card>
