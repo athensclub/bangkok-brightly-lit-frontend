@@ -13,6 +13,7 @@ function Calendar({
   setSelected,
   ...props
 }) {
+  // console.log(props.selected);
   return (
     (<DayPicker
       showOutsideDays={showOutsideDays}

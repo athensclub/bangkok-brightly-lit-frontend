@@ -89,6 +89,7 @@ function LineChart(props) {
             data: status.map(item => ({ x: `${new Date(item.timestamp).getHours().toString().padStart(2,"0")}:${new Date(item.timestamp).getMinutes().toString().padStart(2,"0")}`, y: item[props.keyname] })),
           },
         ]}
+        lineWidth={8}
         margin={{ top: 10, right: 10, bottom: 40, left: 40 }}
         xScale={{
           type: "point",
@@ -107,7 +108,7 @@ function LineChart(props) {
           tickValues: 5,
           tickPadding: 16,
         }}
-        colors={["#177fcb"]}
+        colors={["#C40C0C"]}
         pointSize={6}
         useMesh={true}
         gridYValues={6}
@@ -143,7 +144,7 @@ export function Dashboard() {
   const [current, setCurrent] = useState(null);
   const [alert, setAlert] = useState(null);
   
-  useEffect(() => console.log(selectedDate), [selectedDate])
+  // useEffect(() => console.log(selectedDate), [selectedDate])
 
   useEffect(() => {
     setInterval(() => {
@@ -155,7 +156,6 @@ export function Dashboard() {
       getAlert()
         .then((prop) => {
           setAlert(prop);
-          // console.log(prop);
         })
     }, 5000)
   }, [])
