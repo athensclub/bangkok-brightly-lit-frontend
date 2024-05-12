@@ -19,15 +19,6 @@ To read more about using these font, please visit the Next.js documentation:
 **/
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  DropdownMenuTrigger,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuItem,
-  DropdownMenuContent,
-  DropdownMenu,
-} from "@/components/ui/dropdown-menu";
 import {
   PopoverTrigger,
   PopoverContent,
@@ -41,12 +32,9 @@ import {
   CardContent,
   Card,
 } from "@/components/ui/card";
-import { ResponsivePie } from "@nivo/pie";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { AlertTitle, AlertDescription, Alert } from "@/components/ui/alert";
-import { ResponsiveHeatMap } from "@nivo/heatmap";
 import { ResponsiveLine } from "@nivo/line";
+import { useState } from "react";
 
 function MapPinIcon(props) {
   return (
@@ -145,20 +133,20 @@ function LineChart(props) {
 }
 
 export function Dashboard() {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   return (
     <div className="grid min-h-screen w-full">
       <div className="flex flex-col">
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
           <div className="flex items-center gap-4">
             <h1 className="font-semibold text-lg md:text-xl flex flex-row items-center gap-2">
-            <LightbulbIcon className="h-6 w-6 text-white" /> Bangkok Lighting Dashboard
+              <LightbulbIcon className="h-6 w-6 text-white" /> Bangkok Lighting
+              Dashboard
             </h1>
             <div className="ml-auto flex items-center gap-2">
               <Button className="hidden sm:flex" variant="outline">
                 Today
-              </Button>
-              <Button className="hidden md:flex" variant="outline">
-                This Week
               </Button>
               <Popover>
                 <PopoverTrigger asChild>
@@ -168,11 +156,11 @@ export function Dashboard() {
                     variant="outline"
                   >
                     <CalendarClockIcon className="mr-2 h-4 w-4" />
-                    June 01, 2023 - June 30, 2023
+                    {formatDate(selectedDate)}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent align="end" className="w-auto p-0">
-                  <Calendar initialFocus mode="range" numberOfMonths={2} />
+                  <Calendar mode="single" setSelected={setSelectedDate} />
                 </PopoverContent>
               </Popover>
             </div>
@@ -270,6 +258,25 @@ export function Dashboard() {
       </div>
     </div>
   );
+}
+
+function formatDate(date) {
+  const year = date.getFullYear();
+  const month = date.getMonth(); // Months are zero-indexed (January is 0)
+  const day = date.getDate();
+
+  const dateSuffix =
+    day % 10 === 1 && day !== 11
+      ? "st"
+      : day % 10 === 2 && day !== 12
+      ? "nd"
+      : "th";
+
+  const formattedDate = `${new Intl.DateTimeFormat("en-US", {
+    month: "long",
+  }).format(date)} ${day}${dateSuffix}, ${year}`;
+
+  return formattedDate;
 }
 
 function BellIcon(props) {
