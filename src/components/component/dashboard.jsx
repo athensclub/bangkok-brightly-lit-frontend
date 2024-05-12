@@ -160,7 +160,7 @@ export function Dashboard() {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent align="end" className="w-auto p-0">
-                  <Calendar mode="single" setSelected={setSelectedDate} />
+                  <Calendar mode="single" setSelected={setSelectedDate} selected={selectedDate}/>
                 </PopoverContent>
               </Popover>
             </div>
