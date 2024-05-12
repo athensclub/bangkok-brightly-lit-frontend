@@ -251,7 +251,7 @@ export function Dashboard() {
                 </CardHeader>
               </Card>
               <Card className="flex flex-col relative">
-                <CardHeader className="bg-slate-700 ">
+                <CardHeader className="bg-slate-700 h-full">
                   <CardTitle>Movement Activity</CardTitle>
                   <LineChart className="aspect-[4/3]" keyname = "pir" selectedDate={selectedDate}/>
                 </CardHeader>
