@@ -19,13 +19,14 @@ export async function getAlert() {
 }
 
 export async function getSpecifyStatus(date) {
-  date = new Date(date)
-  date.setDate(date.getDate() + 1)
+  date = new Date(date);
+  date.setHours(date.getHours() + 7);
   let str = JSON.stringify(date);
-  while(str.indexOf('"') >= 0) str = str.replace('"', '');
+  while (str.indexOf('"') >= 0) str = str.replace('"', "");
   const url =
-    "https://iuvf2ngq8i.execute-api.ap-south-1.amazonaws.com/prod/getSpecifyStatus/" + str;
-    console.log('fetching', str)
+    "https://iuvf2ngq8i.execute-api.ap-south-1.amazonaws.com/prod/getSpecifyStatus/" +
+    str;
+  console.log("fetching", date.toUTCString());
   const response = await fetch(url, {
     method: "GET",
   });
