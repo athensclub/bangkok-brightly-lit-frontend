@@ -36,6 +36,8 @@ import { AlertTitle, AlertDescription, Alert } from "@/components/ui/alert";
 import { ResponsiveLine } from "@nivo/line";
 import { useEffect, useState } from "react";
 import { getAlert, getCurrentStatus, getSpecifyStatus } from "@/lib/api";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
 
 function MapPinIcon(props) {
   return (
@@ -178,22 +180,38 @@ export function Dashboard() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [current, setCurrent] = useState(null);
   const [alert, setAlert] = useState(null);
+  const [lastUpdate, setLastUpdate] = useState(new Date());
+  const [timeAgo, setTimeAgo] = useState(null);
 
-  // useEffect(() => console.log(selectedDate), [selectedDate])
+  const updateDate = (date) => {
+    if(date) setSelectedDate(date);
+  }
 
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     getCurrentStatus()
-  //       .then((prop) => {
-  //         setCurrent(prop);
-  //         console.log(prop);
-  //       })
-  //     getAlert()
-  //       .then((prop) => {
-  //         setAlert(prop);
-  //       })
-  //   }, 5000)
-  // }, [])
+  const queryCurrentStatus = async () => {
+    const data = await getCurrentStatus();
+    setCurrent(data);
+
+    let d = new Date( data.timestamp);
+    d.setHours(d.getHours() - 7);
+    setLastUpdate(d);
+    
+    setTimeout(queryCurrentStatus, 1000);
+  }
+
+  const queryAlert = async () => {
+    const data = await getAlert();
+    setAlert(data);
+    
+    setTimeout(queryAlert, 1000);
+  }
+
+  useEffect(() => {
+    TimeAgo.addDefaultLocale(en);
+    setTimeAgo(new TimeAgo("en-US"));
+
+    queryAlert();
+    queryCurrentStatus();
+  }, []);
 
   return (
     <div className="grid min-h-screen w-full">
@@ -226,7 +244,7 @@ export function Dashboard() {
                 <PopoverContent align="end" className="w-auto p-0">
                   <Calendar
                     mode="single"
-                    setSelected={setSelectedDate}
+                    setSelected={updateDate}
                     selected={selectedDate}
                   />
                 </PopoverContent>
@@ -258,7 +276,7 @@ export function Dashboard() {
                     <MoveIcon className="h-5 w-5 text-green-500" />
                     <div className="relative">
                       <div className="font-semibold">Motion Activity</div>
-                      {current === null ? (
+                      {current === null || timeAgo === null ? (
                         <Loading></Loading>
                       ) : (
                         <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -275,7 +293,7 @@ export function Dashboard() {
                         <Loading></Loading>
                       ) : (
                         <div className="text-sm text-gray-500 dark:text-gray-400">
-                          5 seconds ago
+                          {timeAgo.format(lastUpdate)}
                         </div>
                       )}
                     </div>
@@ -345,8 +363,8 @@ export function Dashboard() {
                         <Alert className="mt-10">
                           <AlertTitle>High Light Levels</AlertTitle>
                           <AlertDescription>
-                            Elevated light levels detected in the Sukhumvit
-                            district.
+                            Elevated light levels detected in the Engineering
+                            Faculty.
                           </AlertDescription>
                         </Alert>
                       ) : (
@@ -356,8 +374,8 @@ export function Dashboard() {
                         <Alert className="mt-10">
                           <AlertTitle>Increased Movement</AlertTitle>
                           <AlertDescription>
-                            Unusual movement activity reported in the Chinatown
-                            area.
+                            Movement activity reported in Faculty of
+                            Engineering.
                           </AlertDescription>
                         </Alert>
                       ) : (

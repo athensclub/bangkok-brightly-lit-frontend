@@ -13,12 +13,17 @@ function Calendar({
   setSelected,
   ...props
 }) {
+  const selectedHandler = (selected) => {
+    console.log('selected', selected);
+    setSelected(selected)
+  } 
+
   // console.log(props.selected);
   return (
     (<DayPicker
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
-      onSelect={setSelected}
+      onSelect={selectedHandler}
       classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
